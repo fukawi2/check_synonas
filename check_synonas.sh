@@ -72,9 +72,12 @@ if [[ $check_disk == 1 ]] ; then
   DISKNAME=$($snmpcmd HOST-RESOURCES-MIB::hrStorageDescr.$disk_index)
   DISKSIZE=$($snmpcmd HOST-RESOURCES-MIB::hrStorageSize.$disk_index)
   DISKUSED=$($snmpcmd HOST-RESOURCES-MIB::hrStorageUsed.$disk_index)
+  DISKBLOCKSIZE=$($snmpcmd HOST-RESOURCES-MIB::hrStorageAllocationUnits.$disk_index)
   DISKNAME=${DISKNAME##*STRING: }
   DISKSIZE=${DISKSIZE##*INTEGER: }
   DISKUSED=${DISKUSED##*INTEGER: }
+  DISKBLOCKSIZE=${DISKBLOCKSIZE##*INTEGER: }
+  DISKBLOCKSIZE=${DISKBLOCKSIZE% Bytes*}
 
   disk_pcent_used=$(echo "scale=2; ($DISKUSED / $DISKSIZE) * 100" | bc | sed s/\\.[0-9]\\+//)
   exit_code=$STATE_OK
@@ -82,7 +85,10 @@ if [[ $check_disk == 1 ]] ; then
   [[ $disk_pcent_used -ge $warn_value ]] && { exit_msg='WARNING: ';  exit_code=$STATE_WARNING; }
   [[ $disk_pcent_used -ge $crit_value ]] && { exit_msg='CRITICAL: '; exit_code=$STATE_CRITICAL; }
 
-  disk_free_mb=$(echo "scale=2; $DISKUSED/1024" | bc)
+  # note that the synology appears to return "StorageSize" and "StorageUsed" in
+  # blocks rather than bytes; hence we retrieve the block size ("AllocationUnits")
+  # above so we can convert to (kilo|mega|giga)bytes
+  disk_free_mb=$(echo "scale=2; ($DISKUSED*$DISKBLOCKSIZE)/1024/1024" | bc)
 
   echo "$exit_msg Disk $DISKNAME: $disk_free_mb MB used ($disk_pcent_used%)"
   exit $exit_code
