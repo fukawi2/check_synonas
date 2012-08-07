@@ -38,7 +38,7 @@ usage() {
   echo 'find this information with the folowing command:'
   echo '  $ snmpwalk host.example.com -c public -v2c | grep hrStorageDescr'
   echo 'WARN and CRIT are percentages for the respective conditions. Default is 80 for warning and'
-  echo '90 for critical.'
+  echo '95 for critical.'
   echo
   echo 'NETINDEX is the index of the network interface to fetch information about.'
   echo 'You can find this information with the folowing command:'
