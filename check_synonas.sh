@@ -10,12 +10,18 @@ STATE_WARNING=1
 STATE_CRITICAL=2
 STATE_UNKNOWN=3  
 
+# defaults
+warn_value=80
+crit_value=95
+
 usage() {
   echo "Usage: $(basename $0) -H HOSTADDRESS -c COMMUNITY [-d DISKINDEX] [-n NETINDEX]"
   echo
   echo 'DISKINDEX is the index of the disk to fetch information about. You can'
   echo 'find this information with the folowing command:'
   echo '  $ snmpwalk host.example.com -c public -v2c | grep hrStorageDescr'
+  echo 'WARN and CRIT are percentages for the respective conditions. Default is 80 for warning and'
+  echo '90 for critical.'
   echo
   echo 'NETINDEX is the index of the network interface to fetch information about.'
   echo 'You can find this information with the folowing command:'
