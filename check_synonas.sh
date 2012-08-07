@@ -15,7 +15,7 @@ warn_value=80
 crit_value=95
 
 usage() {
-  echo "Usage: $(basename $0) -H HOSTADDRESS -c COMMUNITY [-d DISKINDEX] [-n NETINDEX]"
+  echo "Usage: $(basename $0) -H HOSTADDRESS -C COMMUNITY [-d DISKINDEX -w WARN -c CRIT] [-n NETINDEX]"
   echo
   echo 'DISKINDEX is the index of the disk to fetch information about. You can'
   echo 'find this information with the folowing command:'
