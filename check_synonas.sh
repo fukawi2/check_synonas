@@ -102,6 +102,9 @@ if [[ $check_disk == 1 ]] ; then
   DISKBLOCKSIZE=${DISKBLOCKSIZE##*INTEGER: }
   DISKBLOCKSIZE=${DISKBLOCKSIZE% Bytes*}
 
+  [[ -z $DISKSIZE ]] && { echo 'UNKNOWN: disk size not returned by server.'; exit $STATE_UNKNOWN; }
+  [[ -z $DISKUSED ]] && { echo 'UNKNOWN: disk usage not returned by server.'; exit $STATE_UNKNOWN; }
+
   disk_pcent_used=$(echo "scale=2; ($DISKUSED / $DISKSIZE) * 100" | bc | sed s/\\.[0-9]\\+//)
   exit_code=$STATE_OK
   exit_msg='OK: ' 
