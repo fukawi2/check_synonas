@@ -31,6 +31,9 @@ STATE_UNKNOWN=3
 warn_value=80
 crit_value=95
 
+set -e
+set -u
+
 usage() {
   echo "Usage: $(basename $0) -H HOSTADDRESS -C COMMUNITY [-d DISKINDEX -w WARN -c CRIT] [-n NETINDEX]"
   echo
