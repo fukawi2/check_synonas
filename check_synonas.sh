@@ -45,6 +45,11 @@ usage() {
   echo '  $ snmpwalk host.example.com -c public -v2c | grep ifDescr'
 }
 
+# check for dependencies
+for ebin in snmpget bc ; do
+  [[ -z "$(which $ebin 2>/dev/null)" ]] && { echo "UNKNOWN: Could not locate '$ebin'" >&2; exit -1; }
+done
+
 check_disk=0
 check_eth=0
 while getopts “hH:w:c:C:d:n:” OPTION ; do

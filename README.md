@@ -17,6 +17,13 @@ NETINDEX is the index of the network interface to fetch information about. You c
 
     $ snmpwalk host.example.com -c public -v2c | grep ifDescr
 
+DEPENDENCIES
+-----
+There are few dependencies for this script:
+
+* bc
+* snmpget; provided by net-snmp-utils (RHEL/Fedora/CentOS), snmp (Debian/Ubuntu) or net-snmp (Arch)
+
 EXAMPLES
 --------
 
